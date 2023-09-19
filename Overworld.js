@@ -16,7 +16,7 @@ class Overworld {
 
             // clean up the canvas before drawing
             this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            
+
             // draw lower layer
             this.map.drawLowerImage(this.ctx);
 
@@ -25,7 +25,10 @@ class Overworld {
 
             // draw game objects 
             Object.values(this.map.gameObjects).forEach(object =>{
-                object.x += 0.02;
+                // make object updates dynamic
+                object.update({
+                    arrow: this.directionInput.direction,
+                });
                 object.sprite.draw(this.ctx);
             })
 
@@ -38,7 +41,11 @@ class Overworld {
     }
 
     init() {
-        this.map = new OverworldMap(window.OverworldMaps.Kitchen);
+        this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+
+        this.directionInput = new DirectionInput();
+        this.directionInput.init(); // get bindings on the document
+        this.directionInput.direction; 
 
         // start game loop when browser starts
         this.startGameLoop();

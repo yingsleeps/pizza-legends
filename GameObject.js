@@ -5,6 +5,7 @@ class GameObject {
         // pass in position of object or default
         this.x = config.x || 0;
         this.y = config.y || 0;
+        this.direction = config.direction || "down";
 
         // pass in appearance 
         this.sprite = new Sprite({
@@ -12,5 +13,9 @@ class GameObject {
             src: config.src || "/images/characters/people/hero.png",
 
         });
+    }
+
+    update() {
+
     }
 }
