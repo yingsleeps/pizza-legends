@@ -19,6 +19,7 @@ class Person extends GameObject {
     // updates on every frame
     update(state) {
         this.updatePosition();
+        this.updateSprite(state);
 
         if (this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) {
             this.direction = state.arrow;
@@ -34,4 +35,17 @@ class Person extends GameObject {
             this.movingProgressRemaining -= 0.5; // decrement cells left to move
         }
     }
+
+    // update sprite animations with movement
+    // sprite faces moving dir
+    updateSprite(state) {
+        if (this.isPlayerControlled && this.movingProgressRemaining === 0 && !state.arrow) {
+            this.sprite.setAnimation("idle-" + this.direction);
+            return;
+        }
+        
+        if (this,this.movingProgressRemaining > 0) {
+            this.sprite.setAnimation("walk-" + this.direction);
+        }
+    }           
 }
