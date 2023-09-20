@@ -77,10 +77,10 @@ class Sprite {
         }
 
     // method to draw sprites
-    draw(ctx) {
+    draw(ctx, cameraPerson) {
         // has adjustments built in
-        const x = this.gameObject.x - 8;
-        const y = this.gameObject.y - 18;
+        const x = this.gameObject.x - 8 + utils.withGrid(10.5) - cameraPerson.x;
+        const y = this.gameObject.y - 18 + utils.withGrid(6) - cameraPerson.y;
 
         // wait til img is loaded to draw
         this.isShadowLoaded && ctx.drawImage(this.shadow, x, y)
