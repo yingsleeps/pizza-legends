@@ -32,7 +32,6 @@ class Overworld {
 
             // draw game objects 
             Object.values(this.map.gameObjects).forEach(object =>{
-                // make object updates dynamic 
                 object.sprite.draw(this.ctx, cameraPerson);
             })
 
@@ -40,15 +39,19 @@ class Overworld {
             this.map.drawUpperImage(this.ctx, cameraPerson);
 
             // browser will call this fxn whenever a new frame begins
-            requestAnimationFrame(() => {
-                step();
-            })
+            setTimeout(() => {
+
+                requestAnimationFrame(() => {
+                    step();
+                })
+            }, 1000 / 80);
         }
         step();
     }
 
     init() {
         this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+        console.log(this.map.walls);
 
         this.directionInput = new DirectionInput();
         this.directionInput.init(); // get bindings on the document

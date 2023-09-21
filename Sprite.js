@@ -33,11 +33,11 @@ class Sprite {
             "walk-up": [ [1,2], [0,2], [3,2], [0,2] ],
             "walk-left": [ [1,3], [0,3], [3,3], [0,3] ],
         }
-        this.currentAnimation = "idle-down"; // config.currentAnimation || "idle-down";
+        this.currentAnimation = config.currentAnimation || "idle-down";
         this.currentAnimationFrame = 0;
 
         // how many game loop frames to show this one cut of the sprite sheet
-        this.animationFrameLimit = config.animationFrameLimit || 8;
+        this.animationFrameLimit = config.animationFrameLimit || 4;
         // keep track of how much is left of the limit
         this.animationFrameProgress = this.animationFrameLimit;
 

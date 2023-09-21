@@ -9,10 +9,10 @@ class Person extends GameObject {
         this.isPlayerControlled = config.isPlayerControlled || false;
 
         this.directionUpdate = {
-            "up": ["y", -0.5],
-            "down": ["y", 0.5],
-            "left": ["x", -0.5],
-            "right": ["x", 0.5],
+            "up": ["y", -1],
+            "down": ["y", 1],
+            "left": ["x", -1],
+            "right": ["x", 1],
         }
     }
 
@@ -32,7 +32,7 @@ class Person extends GameObject {
         if (this.movingProgressRemaining > 0) {
             const [property, change] = this.directionUpdate[this.direction];
             this[property] += change; // apply change to the coord
-            this.movingProgressRemaining -= 0.5; // decrement cells left to move
+            this.movingProgressRemaining -= 1; // decrement cells left to move
         }
     }
 
@@ -44,7 +44,7 @@ class Person extends GameObject {
             return;
         }
         
-        if (this,this.movingProgressRemaining > 0) {
+        if (this.movingProgressRemaining > 0) {
             this.sprite.setAnimation("walk-" + this.direction);
         }
     }           

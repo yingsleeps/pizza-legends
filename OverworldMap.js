@@ -14,7 +14,7 @@ class OverworldMap {
             this.lowerImage, 
             utils.withGrid(10.5) - cameraPerson.x,
             utils.withGrid(6) - cameraPerson.y
-        );
+        )
     }
 
     drawUpperImage(ctx, cameraPerson) {
@@ -22,7 +22,7 @@ class OverworldMap {
             this.upperImage,
             utils.withGrid(10.5) - cameraPerson.x,
             utils.withGrid(6) - cameraPerson.y
-        );
+        )
     }
 }
 
@@ -37,11 +37,11 @@ window.OverworldMaps = {
                 x: utils.withGrid(5),
                 y: utils.withGrid(6),
             }),
-            npc1: new Person({
-                x: utils.withGrid(1),
-                y: utils.withGrid(4),
-                src: "/images/characters/people/npc1.png"
-            })
+            // npc1: new Person({
+            //     x: utils.withGrid(1),
+            //     y: utils.withGrid(4),
+            //     src: "/images/characters/people/npc1.png"
+            // })
         }
     },
     Kitchen: {
