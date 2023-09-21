@@ -1,6 +1,7 @@
 class OverworldMap {
     constructor(config) {
         this.gameObjects = config.gameObjects;
+        this.walls = config.walls || {};
 
         this.lowerImage = new Image();
         this.lowerImage.src = config.lowerSrc;
@@ -24,6 +25,38 @@ class OverworldMap {
             utils.withGrid(6) - cameraPerson.y
         )
     }
+
+    isSpaceTaken(currentX, currentY, direction) {
+        const {x,y} = utils.nextPosition(currentX, currentY, direction);
+        return this.walls[`${x},${y}`] || false;
+    }
+    
+    mountObjects() {
+        Object.values(this.gameObjects).forEach(o => {
+
+            /* TODO: add logic to determine if obj should actually mount */
+
+            o.mount(this);
+        })
+    }
+
+    /* functions for game objs to block off the space they are on */
+    // run when objs enter the map
+    addWall(x,y) {
+        this.walls[`${x},${y}`] = true;
+    }
+
+    // run when objs leave the map
+    removeWall(x,y) {
+        delete this.walls[`${x},${y}`];
+    }
+
+    // run when objs move around
+    moveWall(wasX, wasY, direction) {
+        this.removeWall(wasX, wasY);
+        const {x,y} = utils.nextPosition(wasX, wasY, direction);
+        this.addWall(x,y);
+    }
 }
 
 /* configuration data for maps */
@@ -37,13 +70,20 @@ window.OverworldMaps = {
                 x: utils.withGrid(5),
                 y: utils.withGrid(6),
             }),
-            // npc1: new Person({
-            //     x: utils.withGrid(1),
-            //     y: utils.withGrid(4),
-            //     src: "/images/characters/people/npc1.png"
-            // })
+            npc1: new Person({
+                x: utils.withGrid(1),
+                y: utils.withGrid(4),
+                src: "/images/characters/people/npc1.png"
+            })
+        },
+        walls: {
+            // dynamic key - don't know what the value is yet 
+            [utils.asGridCoord(7,6)] : true,
+            [utils.asGridCoord(8,6)] : true,
+            [utils.asGridCoord(7,7)] : true,
+            [utils.asGridCoord(8,7)] : true,
         }
-    },
+    },  
     Kitchen: {
         lowerSrc: "/images/maps/KitchenLower.png",
         upperSrc: "images/maps/KitchenUpper.png",
