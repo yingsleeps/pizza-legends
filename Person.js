@@ -41,11 +41,26 @@ class Person extends GameObject {
         if (behavior.type === "walk") {
             // stop here if space is taken -- cannot walk
             if (state.map.isSpaceTaken(this.x, this.y, this.direction)) {
+
+                // for game objs to retry their walking if something blocks it
+                behavior.retry && setTimeout(() => {
+                    this.startBehavior(state, behavior)
+                }, 10)
+                
                 return;
             }
             // ready to walk!
             state.map.moveWall(this.x, this.y, this.direction);
             this.movingProgressRemaining = 16; // reset progress
+            this.updateSprite();
+        }
+
+        if (behavior.type === "stand") {
+            setTimeout(() => {
+                utils.emitEvent("PersonStandingComplete", {
+                    whoId: this.id
+                })
+            }, behavior.time)
         }
     }
 
@@ -54,6 +69,14 @@ class Person extends GameObject {
         const [property, change] = this.directionUpdate[this.direction];
         this[property] += change; // apply change to the coord
         this.movingProgressRemaining -= 1; // decrement cells left to move
+
+        // check if we finished the movement! 
+        if (this.movingProgressRemaining === 0) {
+            // create new custom event to signal that walking is done
+            utils.emitEvent("PersonWalkingComplete", {
+                whoId: this.id
+            });
+        }
     }
 
     // update sprite animations with movement
