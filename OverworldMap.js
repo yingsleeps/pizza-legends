@@ -92,7 +92,6 @@ class OverworldMap {
         if (!this.isCutscenePlaying && match) {
             this.startCutscene(match[0].events); 
         }
-
     }
 
     /* functions for game objs to block off the space they are on */
@@ -192,6 +191,7 @@ window.OverworldMaps = {
         upperSrc: "images/maps/KitchenUpper.png",
         gameObjects: {
             hero: new Person({
+                isPlayerControlled: true,
                 x: utils.withGrid(5),
                 y: utils.withGrid(5),
             }),

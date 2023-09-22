@@ -52,6 +52,7 @@ class Overworld {
         step();
     }
 
+    /* functions to bind inputs/game events to event handlers */
     // listen for enter key + check for npc dialogue if npc at that pos
     bindActionInput() {
         new KeyPressListener("Enter", () => {
@@ -71,9 +72,16 @@ class Overworld {
         })
     }
 
-    init() {
-        this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
+    // initializes each map for the overworld
+    startMap(mapConfig) {
+        this.map = new OverworldMap(mapConfig);
+        this.map.overworld = this;
         this.map.mountObjects();
+    }
+
+    /* initializes overall game */
+    init() {
+        this.startMap(window.OverworldMaps.DemoRoom);
 
         this.bindActionInput();
         this.bindHeroPositionCheck();
