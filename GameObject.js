@@ -16,14 +16,19 @@ class GameObject {
 
         });
 
-        this.behaviorLoop = config.behaviorLoop || {};
+        // hold behavior loop array passed in or leave as empty arr
+        this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0; // keep track of which behavior we are on
+
+        // hold talking array passed in or leave as empty arr
+        this.talking = config.talking || [];
     }
 
     update() {
 
     }
 
+    /* mounts objs to the map, blocking off the space they occupy */
     mount(map) {
         this.isMounted = true;
         map.addWall(this.x, this.y);
@@ -34,6 +39,7 @@ class GameObject {
         }, 10)
     }
 
+    /* npcs run their idle behavior loops */ 
     async doBehaviorEvent(map) {
         // don't do anything if there is a cutscene playing or if there isn't a config to do anything 
         if (map.isCutscenePlaying || this.behaviorLoop.length === 0 || this.isStanding) {
