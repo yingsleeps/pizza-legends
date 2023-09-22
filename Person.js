@@ -5,6 +5,7 @@ class Person extends GameObject {
     constructor(config) {
         super(config); // do normal constructor stuff of the game object
         this.movingProgressRemaining = 0; // this ensures movement stays within grid
+        this.isStanding = false; // working on a stand command
 
         this.isPlayerControlled = config.isPlayerControlled || false;
 
@@ -56,10 +57,12 @@ class Person extends GameObject {
         }
 
         if (behavior.type === "stand") {
+            this.isStanding = true;
             setTimeout(() => {
                 utils.emitEvent("PersonStandingComplete", {
                     whoId: this.id
                 })
+                this.isStanding = false; 
             }, behavior.time)
         }
     }

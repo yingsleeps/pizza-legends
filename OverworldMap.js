@@ -57,6 +57,9 @@ class OverworldMap {
         }
 
         this.isCutscenePlaying = false;
+
+        // reset npcs to do their idle behavior
+        Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this));
     }
     /* functions for game objs to block off the space they are on */
     // run when objs enter the map
