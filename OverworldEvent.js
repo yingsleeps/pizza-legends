@@ -57,6 +57,12 @@ class OverworldEvent {
     }
 
     textMessage(resolve) {
+        // make npcs face hero when talking
+        if (this.event.faceHero) {
+            const obj = this.map.gameObjects[this.event.faceHero];
+            // npc will face opposite dir of hero to face them 
+            obj.direction = utils.oppositeDirection(this.map.gameObjects["hero"].direction);
+        }
         const message = new TextMessage({
             text: this.event.text,
             onComplete: () => resolve()

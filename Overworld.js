@@ -52,24 +52,47 @@ class Overworld {
         step();
     }
 
+    // listen for enter key + check for npc dialogue if npc at that pos
+    bindActionInput() {
+        new KeyPressListener("Enter", () => {
+            // ask map if there is a person there to talk to
+            this.map.checkForActionCutscene();
+        })
+    }
+
+    // listen for hero position changes + check for cutscene squares
+    bindHeroPositionCheck() {
+        document.addEventListener("PersonWalkingComplete", e=> {
+            // check if hero position has changed
+            if (e.detail.whoId === "hero") {
+                // check if there is a cutscene at this square
+                this.map.checkForFootstepCutscene();
+            }
+        })
+    }
+
     init() {
         this.map = new OverworldMap(window.OverworldMaps.DemoRoom);
         this.map.mountObjects();
 
+        this.bindActionInput();
+        this.bindHeroPositionCheck();
+
         this.directionInput = new DirectionInput();
         this.directionInput.init(); // get bindings on the document
-        this.directionInput.direction; 
 
         // start game loop when browser starts
         this.startGameLoop();
 
-        this.map.startCutscene([
-            { who: "hero", type: "walk", direction: "down" },
-            { who: "hero", type: "walk", direction: "down" },
-            { who: "npcA", type: "walk", direction: "left" },
-            { who: "npcA", type: "walk", direction: "left" },
-            { who: "npcA", type: "stand", direction: "up", time: 800 },
-        ])
+        // this.map.startCutscene([
+        //     { who: "hero", type: "walk", direction: "down" },
+        //     { who: "hero", type: "walk", direction: "down" },
+        //     { who: "npcA", type: "walk", direction: "up" },
+        //     { who: "npcA", type: "walk", direction: "left" },
+        //     { who: "hero", type: "stand", direction: "right", time: 200 },
+        //     { type: "textMessage", text: "why hello hello!"}
+        //     // { who: "npcA", type: "stand", direction: "up", time: 800 },
+        // ])
         
         
     }

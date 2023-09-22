@@ -1,6 +1,6 @@
 /* hosts random useful functions */
 const utils = {
-    /* functions for movement calculation */
+    /* functions for movement calculation + direction */
     // does grid calculations for us
     withGrid(n) {
         return n * 16;
@@ -24,6 +24,12 @@ const utils = {
             y += size;
         }
         return {x,y};
+    },
+    oppositeDirection(direction) {
+        if (direction === "left") { return "right" }
+        if (direction === "right") { return "left" }
+        if (direction === "up") { return "down" }
+        return "up"
     },
 
     /* function to create custom events */ 
