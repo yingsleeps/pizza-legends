@@ -13,6 +13,7 @@
 .TextMessage_p {
     margin: 0;
     font-size: 12px;
+    font-family: 'VT323', monospace;
 
 }
 
@@ -23,7 +24,7 @@
     -webkit-appearance: none;
     background: none;
     border: 0;
-    font-family: inherit;
+    font-family: 'VT323', monospace;
     cursor: pointer;
 
     position: absolute;
