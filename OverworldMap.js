@@ -9,7 +9,7 @@ class OverworldMap {
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc; 
 
-        this.isCutscenePlaying = false;
+        this.isCutscenePlaying = true;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -44,7 +44,20 @@ class OverworldMap {
             object.mount(this);
         })
     }
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
 
+        /* start a loop of async events + await each one */
+        for (let i = 0; i < events.length; i++) {
+            const eventHandler = new OverworldEvent({
+                map: this,
+                event: events[i],
+            })
+            await eventHandler.init();
+        }
+
+        this.isCutscenePlaying = false;
+    }
     /* functions for game objs to block off the space they are on */
     // run when objs enter the map
     addWall(x,y) {

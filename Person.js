@@ -24,8 +24,8 @@ class Person extends GameObject {
 
             /* add more cases for starting to walk here */
 
-            // in this case, we are keyboard ready (player provides input) + arrow is pressed
-            if (this.isPlayerControlled && state.arrow) {
+            // CASE: we are keyboard ready (player provides input) + arrow is pressed
+            if (!state.map.isCutscenePlaying && this.isPlayerControlled && state.arrow) {
                 this.startBehavior(state, {
                     type: "walk", 
                     direction: state.arrow,
@@ -46,7 +46,7 @@ class Person extends GameObject {
                 behavior.retry && setTimeout(() => {
                     this.startBehavior(state, behavior)
                 }, 10)
-                
+
                 return;
             }
             // ready to walk!
