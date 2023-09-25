@@ -14,6 +14,8 @@ class OverworldEvent {
             this[this.event.type](resolve)
         })
     }
+
+    // event for game objects to stand + face a dir for a period of time
     stand(resolve) {
         const who = this.map.gameObjects[ this.event.who ];
         who.startBehavior({
@@ -35,6 +37,7 @@ class OverworldEvent {
         document.addEventListener("PersonStandingComplete", completeHandler);
     }
 
+    // event for game objs walking, resolve event when done walking
     walk(resolve) {
         const who = this.map.gameObjects[ this.event.who ];
         who.startBehavior({
@@ -56,6 +59,7 @@ class OverworldEvent {
         document.addEventListener("PersonWalkingComplete", completeHandler);
     }
 
+    // event to show a text message
     textMessage(resolve) {
         // make npcs face hero when talking
         if (this.event.faceHero) {
@@ -70,8 +74,18 @@ class OverworldEvent {
         message.init(document.querySelector(".game-container"))
     }
 
+    // event to change map
+    // fire change  map betweeen the overworld fades
     changeMap(resolve) {
-        this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
-        resolve();
+        const sceneTransition = new SceneTransition();
+        // create the scene transition element + add it to the game container
+        sceneTransition.init(document.querySelector(".game-container"), () => {
+            // bring in the new map after the fade in + resolve the event
+            this.map.overworld.startMap(window.OverworldMaps[this.event.map]);
+            resolve();
+
+            // start the fade out to reveal the new map
+            sceneTransition.fadeOut();
+        });
     }
 }
