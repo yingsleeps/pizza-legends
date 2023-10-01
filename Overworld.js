@@ -92,10 +92,10 @@ class Overworld {
         // start game loop when browser starts
         this.startGameLoop();
 
-        // this.map.startCutscene([
-        //     // { type: "textMessage", text: "Hello, this is the first message"}
-        //     { type: "changeMap", map: "DemoRoom" }
-        // ])
+        this.map.startCutscene([
+            // { type: "textMessage", text: "Hello, this is the first message"}
+            { type: "battle" }
+        ])
         
         
     }
