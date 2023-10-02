@@ -32,7 +32,13 @@ class BattleEvent {
     }
 
     async stateChange(resolve) {
-        const { caster, target, damage, recover } = this.event;
+        const { caster, target, action, damage, recover, status } = this.event;
+        // figure out who the target is
+        let who = this.event.onCaster ? caster : target;
+        if (action.targetType === "friendly") {
+            who = caster;
+        }
+
         // state change due to damage
         if (damage) {
             // modify target to have less hp
@@ -45,8 +51,6 @@ class BattleEvent {
 
         // state change due to recovery
         if (recover) {
-            // figure out who the target of recovry is
-            const who = this.event.onCaster ? caster : target;
             // calculate new hp + update
             let newHp = who.hp + recover;
             if (newHp > who.maxHp) {
@@ -55,6 +59,18 @@ class BattleEvent {
             who.update({
                 hp: newHp,
             })
+        }
+
+        // state change due to status addition/removal
+        if (status) {
+            who.update({
+                status: {...status},
+            });
+        }
+        if (status === null) {
+            who.update({
+                status: null,
+            });
         }
 
         // wait a bit
