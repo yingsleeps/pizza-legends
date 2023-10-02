@@ -46,4 +46,9 @@ const utils = {
             }, ms)
         })
     },
+
+    /* generate random */
+    randomFromArray(array) {
+        return array[ Math.floor(Math.random()*array.length) ]
+    }
 }
