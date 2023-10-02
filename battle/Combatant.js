@@ -72,6 +72,48 @@ class Combatant {
         // update hp and xp bar percent fills
         this.hpFills.forEach(rect => rect.style.width = `${this.hpPercent}%`);
         this.xpFills.forEach(rect => rect.style.width = `${this.xpPercent}%`);
+
+        // update status
+        const statusElement = this.hudElement.querySelector(".Combatant_status");
+        // if the combatant has a status display it
+        if (this.status) {
+            statusElement.innerText = this.status.type;
+            statusElement.style.display = "block";
+        } else {
+            statusElement.innerText = "";
+            statusElement.style.display = "none";
+        }
+    }
+
+    getPostEvents() {
+        // handle case with status
+        if (this.status?.type === "saucy") {
+            return [
+                { type: "textMessage", text: "Feelin' saucy :D" },
+                { type: "stateChange", recover: 5, onCaster: true },
+            ]
+        }
+        // defaults to empty (usual case)
+        return [];
+    }
+
+    // downtick turn count for status + remove status for counts that reach 0
+    decrementStatus() {
+        if (this.status?.expiresIn > 0) {
+            this.status.expiresIn -= 1;
+            // hold old status for message
+            let oldStatus = this.status.type;
+            if (this.status.expiresIn === 0) {
+                this.update({
+                    status: null,
+                });
+                return {
+                    type: "textMessage",
+                    text: `Status expired! No longer ${oldStatus} :(`
+                }
+            }
+        }
+        return null;
     }
 
     init(container) {
