@@ -49,7 +49,7 @@
     animation: battle-damage-blink 0.3s steps(2, start) infinite;
 }
 
-/* when a player pizza performs a move */
+/* when a player pizza performs spin */
 @keyframes battle-spin-right {
     0% { transform: translate3d(0,0,0) rotate(0deg) scale(2) }
     25% { transform: translate3d(155px,-40px,0) rotate(45deg) scale(2) }
@@ -59,7 +59,7 @@
     animation: battle-spin-right 0.8s;
 }
 
-/* when an enemy pizza performs a move */
+/* when an enemy pizza performs spin */
 @keyframes battle-spin-left {
     0% { transform: translate3d(0,0,0) rotate(0deg) scale(2) }
     25% { transform: translate3d(-155px,50px,0) rotate(45deg) scale(2) }
@@ -67,4 +67,40 @@
 }
 .battle-spin-left {
     animation: battle-spin-left 0.8s;
+}
+
+/* when player pizza performs glob */
+.glob-orb {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+@keyframes battle-glob-right {
+    0% { transform: translate3d(0,0,0) scale(0.5); opacity: 1; }
+    50% { transform: translate3d(10px,-80px,0) scale(1); opacity: 1; }
+    80% { transform: translate3d(149px,-47px,0) scale(1); opacity: 1; }
+    100% { transform: translate3d(149px,-47px,0) scale(3); opacity: 0; }
+}
+.battle-glob-right {
+    left: 70px;
+    top: 104px;
+    animation: battle-glob-right 1s forwards;
+}
+
+/* when enemy pizza performs glob */
+.glob-orb {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+@keyframes battle-glob-left {
+    0% { transform: translate3d(0,0,0) scale(0.5); opacity: 1; }
+    50% { transform: translate3d(-10px,-50px,0) scale(1); opacity: 1; }
+    80% { transform: translate3d(-174px,47px,0) scale(1); opacity: 1; }
+    100% { transform: translate3d(-174px,47px,0) scale(3); opacity: 0; }
+}
+.battle-glob-left {
+    left: 227px;
+    top: 56px;
+    animation: battle-glob-left 1s forwards;
 }

@@ -21,7 +21,8 @@ class TurnCycle {
         });
 
         // get all resulting events that will happen after the submitted action
-        const resultingEvents = submission.action.success;
+        const resultingEvents = caster.getReplacedEvents(submission.action.success);
+
         // iterate through each event + await result of each
         for (let i = 0; i < resultingEvents.length; i++) {
             const event = {

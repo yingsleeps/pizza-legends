@@ -85,6 +85,19 @@ class Combatant {
         }
     }
 
+    // get either original or replaced events 
+    getReplacedEvents(originalEvents) {
+        // if clumsy, then 1/3 chance of caster's action events being replaced 
+        if ( this.status?.type === "clumsy" && utils.randomFromArray([true, false, false]) ) {
+            return [
+                { type: "textMessage", text: `${this.name} flops over!` }
+            ]
+        }
+        // defaults to the original events
+        return originalEvents;
+    }
+    
+    // returns all the events that should happen after the caster turn action
     getPostEvents() {
         // handle case with status
         if (this.status?.type === "saucy") {
