@@ -35,9 +35,6 @@ class BattleEvent {
         const { caster, target, action, damage, recover, status } = this.event;
         // figure out who the target is
         let who = this.event.onCaster ? caster : target;
-        if (action.targetType === "friendly") {
-            who = caster;
-        }
 
         // state change due to damage
         if (damage) {
