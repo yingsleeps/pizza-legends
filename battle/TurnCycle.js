@@ -20,6 +20,11 @@ class TurnCycle {
             enemy,
         });
 
+        // check if an item was used + remove if so
+        if (submission.instanceId) {
+            this.battle.items = this.battle.items.filter(item => item.instanceId !== submission.instanceId);
+        }
+
         // get all resulting events that will happen after the submitted action
         const resultingEvents = caster.getReplacedEvents(submission.action.success);
 
