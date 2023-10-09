@@ -33,10 +33,17 @@ class Battle {
                 status: null,
             }, this),
         },
+        // the current active combatants -- so screen knows which to display
         this.activeCombatants = {
             player: "player1",
             enemy: "enemy1"
-        }
+        },
+        // tracks all the items within the battle
+        this.items = [
+            { actionId: "item_recoverStatus", instanceId: "p1", team: "player" },
+            { actionId: "item_recoverStatus", instanceId: "p2", team: "player" },
+            { actionId: "item_recoverStatus", instanceId: "p1", team: "enemy" },
+        ]
     }
 
     // create the battle scnee -- where the battle occurs
